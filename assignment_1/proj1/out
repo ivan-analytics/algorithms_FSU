@@ -1,0 +1,35 @@
+Total 84 different characters, 10 most used characters:
+No. 0:            3529
+No. 1: e          680
+No. 2: t          613
+No. 3: s          532
+No. 4: r          492
+No. 5: n          476
+No. 6: i          456
+No. 7: o          353
+No. 8: \n         343
+No. 9: c          333
+
+Total 213 different words, 10 most used words:
+No. 0: std        82
+No. 1: int        51
+No. 2: i          47
+No. 3: if         46
+No. 4: second     45
+No. 5: char       44
+No. 6: seq        38
+No. 7: cout       35
+No. 8: vec        35
+No. 9: map        34
+
+Total 18 different numbers, 10 most used numbers:
+No. 0: 0          19
+No. 1: 1          15
+No. 2: 5          3
+No. 3: 2          3
+No. 4: 65         2
+No. 5: 90         2
+No. 6: 97         2
+No. 7: 122        2
+No. 8: 48         2
+No. 9: 57         2

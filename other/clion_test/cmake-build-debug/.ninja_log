@@ -1,0 +1,7 @@
+# ninja log v6
+3	544	1724948349845144955	CMakeFiles/clion_test.dir/main.cpp.o	d2f31363a6f8083d
+544	586	1724948350386338965	clion_test	57d73bf0a7401e51
+3	458	1724949108139062891	CMakeFiles/clion_test.dir/test_new_class_interface.cpp.o	3e211dbbad022e17
+458	501	1724949108593904170	clion_test	37fc61ab7ad7fb87
+4	426	1724949307753711401	CMakeFiles/clion_test.dir/main.cpp.o	d2f31363a6f8083d
+426	464	1724949308175919580	clion_test	37fc61ab7ad7fb87

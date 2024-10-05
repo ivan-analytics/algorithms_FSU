@@ -1,0 +1,343 @@
+
+#include <iostream>
+#include <string>
+#include <map>
+#include <utility>  // For std::pair
+#include <stdexcept> // For std::runtime_error
+#include <iomanip> // For std::setw
+#include <type_traits> // For is_same_v in a template funcitons
+using namespace std;
+
+// TODOs
+// - refactor "if (prev_char_type == CHARACTER) {" part with reference for concisenes and not duplkicating code
+// - remove order int from characters containers  sinece it is not used there
+
+
+// std::cout << (std::getline(std::cin, inp) ? "true" : "false") << std::endl;
+
+// std::vector<std::pair<char, int>> elems(table.begin(), table.end());
+// std::sort(elems.begin(), elems.end(), comp);
+
+
+// while getline:
+//     char prev, cur;
+//     string seq = ""; // word or number
+//     for c in line:
+        
+
+// kasdfh329847jh!kjh324!44
+
+// ascii table
+// chars:
+// [65, 90]
+// [97, 122]
+
+// digits:
+// [48, 57]
+
+sdfgfsfsdfds
+sdfsdfsdf
+fsdsd23
+
+edfsfsfdsf
+
+enum char_type {
+    LETTER,
+    DIGIT,
+    OTHER
+};
+
+enum str_type {
+    WORD,
+    NUMBER,
+    NA // Non-Applicable
+};
+
+bool is_in_range(int x, int min, int max) {
+    return x >= min && x <= max;
+}
+
+char_type get_char_type(char a) {
+    if (is_in_range(static_cast<int>(a), 65, 90) || is_in_range(static_cast<int>(a), 97, 122)) {
+        return LETTER;
+    } else if (is_in_range(static_cast<int>(a), 48, 57)) {
+        return DIGIT;
+    } else {
+        return OTHER;
+    }
+    throw std::runtime_error("custom error");
+    
+}
+
+
+// Template function to print elements of a vector
+template <typename T>
+void output_to_cout(const std::vector<pair<T, pair<int, int>>>& vec, int longest, str_type str_type_) {
+    int num_of_iterations = vec.size() >= 10 ? 10 : vec.size();
+    int OFFSET = 5;
+    if constexpr (std::is_same<T, char>::value) {
+        int SPECIAL_CHAR_LENGTH = 2;
+        std::cout << "Total " << vec.size() << " different characters, " << num_of_iterations << " most used characters:" << std::endl;
+        for (int i = 0; i < num_of_iterations; i++) {
+            std::cout << "No. " << i << ": ";
+            if (vec[i].first == '\n') {
+                std::cout << "\\n";
+                std::cout << std::setw(longest - SPECIAL_CHAR_LENGTH + OFFSET) << "" << vec[i].second.second << std::endl;
+                continue;
+            } else if (vec[i].first == '\t') {
+                std::cout << "\\t";
+                std::cout << std::setw(longest - SPECIAL_CHAR_LENGTH + OFFSET) << "" << vec[i].second.second << std::endl;
+                continue;
+            }
+
+            int CHAR_LENGTH = 1;
+            std::cout << vec[i].first << std::setw(longest - CHAR_LENGTH + OFFSET)  << "" << vec[i].second.second << std::endl;
+        }
+
+        return;
+    } else if constexpr (std::is_same<T, std::string>::value) {
+        string insert;
+        if (str_type_ == WORD) insert = "words";
+        else if (str_type_ == NUMBER) insert = "numbers";
+        else throw std::runtime_error("custom error: output_to_cout not a word or number");
+        std::cout << "Total " << vec.size() << " different " << insert << ", " << num_of_iterations << " most used " << insert << ":" << std::endl;
+
+        for (int i = 0; i < num_of_iterations; i++) {
+            int str_length = vec[i].first.size();
+            std::cout << "No. " << i << ": ";
+            std::cout << vec[i].first << std::setw(longest - str_length + OFFSET)  << "" << vec[i].second.second << std::endl;
+        }
+
+        return;
+    } else {
+        throw std::runtime_error("custom error: output_to_cout template does not handle this type");
+    }
+
+    cout << endl;
+
+    return;
+}
+
+
+
+
+int main() {
+    // hash maps that count number of occurencies.
+    // pair: 1st int is to keep which el was inserted to map earlier, 2nd int is for counting
+    std::unordered_map<char, std::pair<int, int> > characters;
+    std::unordered_map<std::string, std::pair<int, int> > words;
+    std::unordered_map<std::string, std::pair<int, int> > numbers;
+
+
+
+    std::string inp;
+    int i = 0;
+    int endl_count = -1;
+    char_type prev_char_type, cur_char_type;
+    char cur_char;
+    std::string seq = ""; // word or number
+    // read until the End Of File
+    while (std::cin.eof() != true) {
+        std::getline(std::cin, inp);
+
+        if (i != 0) {
+            if (prev_char_type == LETTER) {
+                auto this_seq_in_map = words.find(seq);
+                // if its already been in the map exists
+                if (this_seq_in_map != words.end()) {
+                    // increment the counter 
+                    this_seq_in_map->second.second++;
+                } else {
+                    // add to the map, fixing the insertion order by adding i and setting number of occurencies (counter) to 1
+                    words.insert({seq, {i, 1}});
+                }
+                if (seq.size() == 0) cout << "!!!!! : " << i << endl;
+            } else if (prev_char_type == DIGIT) {
+                auto this_seq_in_map = numbers.find(seq);
+                // if its already been in the map exists
+                if (this_seq_in_map != numbers.end()) {
+                    // increment the counter
+                    this_seq_in_map->second.second++;
+                } else {
+                    // add to the map, fixing the insertion order by adding i and setting number of occurencies (counter) to 1
+                    numbers.insert({seq, {i, 1}});
+                }
+                if (seq.size() == 0) cout << "!!!!! : " << i << endl;
+            }
+            // reset seq
+            seq.clear();  
+        }
+
+        
+
+        for (auto el : inp) {
+            cur_char = el;
+            cur_char_type = get_char_type(cur_char);
+
+            // check if it is a new or continuing sequence
+            if (i == 0) {
+                // don't compare
+
+            } else if (cur_char_type != prev_char_type) {
+                // add seq to words or numbers map
+                // is this seq a word or number then add it to the words/numbers map
+                if (prev_char_type == LETTER) {
+                    auto this_seq_in_map = words.find(seq);
+                    // if its already been in the map exists
+                    if (this_seq_in_map != words.end()) {
+                        // increment the counter 
+                        this_seq_in_map->second.second++;
+                        if (seq.size() == 0) cout << "!!!!! : " << i << endl;
+                    } else {
+                        // add to the map, fixing the insertion order by adding i and setting number of occurencies (counter) to 1
+                        words.insert({seq, {i, 1}});
+                        if (seq.size() == 0) cout << "!!!!! : " << i << endl;
+                        if (seq.size() == 0) throw std::runtime_error("...");
+                    }
+                    if (seq.size() == 0) cout << "!!!!! : " << i << endl;
+                } else if (prev_char_type == DIGIT) {
+                    auto this_seq_in_map = numbers.find(seq);
+                    // if its already been in the map exists
+                    if (this_seq_in_map != numbers.end()) {
+                        // increment the counter
+                        this_seq_in_map->second.second++;
+                    } else {
+                        // add to the map, fixing the insertion order by adding i and setting number of occurencies (counter) to 1
+                        numbers.insert({seq, {i, 1}});
+                        if (seq.size() == 0) cout << "!!!!! : " << i << endl;
+                        if (seq.size() == 0) throw std::runtime_error("...");
+                    }
+                }
+
+                // reset seq
+                seq.clear();
+            }
+
+            // add cur char to characters map
+            auto this_char_in_map = characters.find(cur_char);
+            // if its already been in the map exists
+            if (this_char_in_map != characters.end()) {
+                // increment the counter 
+                this_char_in_map->second.second++;
+            } else {
+                // add to the map, fixing the insertion order by adding i and setting number of occurencies (counter) to 1
+                characters.insert({cur_char, {i, 1}});
+            }
+
+            // add cur char to new seq unless its an OTHER char
+            if (cur_char_type != OTHER) {
+                seq.push_back(cur_char);
+            }
+
+            prev_char_type = cur_char_type;
+            i++;
+        }
+        endl_count++;
+    }
+
+    // prepare to sort (map -> vect)
+    auto r = numbers.find("");
+    if (r != numbers.end()) 
+        cout << "BBBBB: " << r->second.first << endl << r->second.second;
+
+    std::vector<pair<char, pair<int, int>>> characters_vec(characters.begin(), characters.end());
+    std::vector<pair<string, pair<int, int>>> words_vec(words.begin(), words.end());
+    std::vector<pair<string, pair<int, int>>> numbers_vec(numbers.begin(), numbers.end());
+
+    // adding "\n" mnually since getline ignores it unless there wasn't any end lines
+    if (endl_count > 0) characters_vec.push_back(make_pair('\n', make_pair(-1, endl_count)));
+
+    // comparators to define how to sort elements
+    // sort by count, then by key (characters) or order (words, numbers)
+    auto comparator_for_characters = [](const std::pair<char, std::pair<int, int>>& a, const std::pair<char, std::pair<int, int>>& b) {
+        // higher count at the top
+        if (a.second.second > b.second.second) {
+            return true;
+        } else if (a.second.second < b.second.second) {
+            return false;
+        } else {
+            // if counts are the same - smaller ascii at the top
+            return static_cast<int>(a.first) < static_cast<int>(b.first);
+        }
+
+        // return a.first < b.first; // Returns a bool
+    };  
+
+    auto comparator_for_words_and_numbers = [](const std::pair<string, std::pair<int, int>>& a, const std::pair<string, std::pair<int, int>>& b) {
+        // higher count at the top
+        if (a.second.second > b.second.second) {
+            return true;
+        } else if (a.second.second < b.second.second) {
+            return false;
+        } else {
+            // if counts are the same - smaller ascii at the top
+            return a.second.first < b.second.first;
+        }
+        throw std::runtime_error("custom error");
+    };  
+
+    // stable to preserve initial order of equal elemets ()
+    std::sort(characters_vec.begin(), characters_vec.end(), comparator_for_characters);
+    std::sort(words_vec.begin(), words_vec.end(), comparator_for_words_and_numbers);
+    std::sort(numbers_vec.begin(), numbers_vec.end(), comparator_for_words_and_numbers);
+
+    // longest string
+    int longest_str = 0;
+    for (int i = 0; i < words_vec.size(); i++) 
+        if (words_vec[i].first.size() > longest_str) longest_str = words_vec[i].first.size();
+    for (int i = 0; i < numbers_vec.size(); i++) 
+        if (numbers_vec[i].first.size() > longest_str) longest_str = numbers_vec[i].first.size();
+    int offset = 5;
+
+    output_to_cout(characters_vec, longest_str, NA);
+    output_to_cout(words_vec, longest_str, WORD);
+    output_to_cout(numbers_vec, longest_str, NUMBER);
+
+    cout << endl << numbers_vec[1].first.size() << endl << numbers_vec[2].first.size() << endl;
+    
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+// int main() {
+
+//     int a;
+
+//     std::cout << a << std::endl;
+
+//     return 0;
+// }
+
+
+
+// ascii ascending 
+    // 5 6 7 8 
+
+
+
+
+
+
+    // std::cout << "words:" << std::endl;
+    // for (const auto& el : words) {
+    //     std::cout << "Key: " << el.first << ", Value: " << el.second.second << std::endl;
+    // }
+
+    // cout << endl << endl;
+    // std::cout << "numbers:" << std::endl;
+    // for (const auto& el : numbers) {
+    //     std::cout << "Key: " << el.first << ", Value: " << el.second.second << std::endl;
+    // }
+
+    // cout << endl << endl;
+    // std::cout << "characters:" << std::endl;
+    // for (const auto& el : characters) {
+    //     std::cout << "Key: " << el.first << ", Value: " << el.second.second << std::endl;
+    // }
