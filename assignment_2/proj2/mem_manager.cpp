@@ -1,3 +1,9 @@
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+
 void print_menu() {
 	cout << string(20, '=') << endl;
 	cout << "d: memory dump" << endl;
