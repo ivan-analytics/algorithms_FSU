@@ -86,22 +86,47 @@ namespace cop4530 {
 				// nested iterator class
 				class iterator : public const_iterator {
 					public:
-						iterator();
-						T & operator*();
+						iterator() {
+							current = nullptr;
+						};
 
-                        // already implemented in const_iterator the right way (?)
+						T & operator*() {
+							return retrieve();
+						}
+                        // already implemented in const_iterator the right way
 						// const T & operator*() const;
 
-						T* operator->(); // return pointer to element
-						const T* operator->() const; // return pointer to content element
+						// return pointer to element
+						T* operator->() {
+							return &retrieve();
+						};
+						// already implemented in const_iterator the right way
+						// const T* operator->() const; // return pointer to content element
+
 						// increment/decrement operators
-						iterator & operator++();
-						iterator operator++(int);
-						iterator & operator--();
-						iterator operator--(int);
+						iterator & operator++() {
+							current = current->next;
+							return *this;
+						};
+						iterator operator++(int) {
+							iterator temp = *this;
+							current = current->next;
+							return temp;
+						};
+						iterator & operator--() {
+							current = current->prev;
+							return *this;
+						};
+						iterator operator--(int) {
+							iterator temp = *this;
+							current = current->prev;
+							return temp;
+						};
 
 					protected:
-						iterator(Node *p);
+						iterator(Node *p) {
+							current = p;
+						};
 						friend class List<T>;
 				};
 
