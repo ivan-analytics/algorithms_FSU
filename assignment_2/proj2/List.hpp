@@ -143,35 +143,126 @@ namespace cop4530 {
 						push_back(val);
 				};
 				// move constructor
-				List(List && rhs); 
-				// num elements with value of val
-				explicit List(int num, const T& val = T{}); 
-				// constructs with elements [start, end)
-				List(const_iterator start, const_iterator end); 
+				List(List && rhs) {
+					// transferring data ownership to the current container
+					head = rhs.head;
+					tail = rhs.tail;
+					theSize = rhs.theSize;
 
-				~List(); // destructor
+					// preventing access to this data from the previous container
+					rhs.head = nullptr;
+					rhs.tail = nullptr;
+					rhs.theSize = 0;
+				};
+
+				// num elements with value of val
+				explicit List(int num, const T& val = T{}) {
+					init();
+					for (int i = 0; i < num; i++)
+						push_back(val);
+				}
+				// constructs with elements [start, end)
+				List(const_iterator start, const_iterator end) {
+					init();
+					// when start reaches end, while wont execute so end el will not be added
+					while (start != end) {
+						push_back(*start);
+						++start;
+					}
+				};
+
+				// destructor
+				~List() {
+					clear();
+					delete head;
+					delete tail;
+				}; 
 
 				// copy assignment operator
-				const List& operator=(const List &rhs);
+				const List& operator=(const List &rhs) {
+					if (this != &rhs) {
+						clear();
+						for (auto &val : rhs)
+							push_back(val);
+					}
+					return *this;
+				};
 				// move assignment operator
-				List & operator=(List && rhs);
+				List & operator=(List && rhs) {
+					if (this != &rhs) {
+						clear();
+
+						// transferring data ownership to the current container
+						head = rhs.head;
+						tail = rhs.tail;
+						theSize = rhs.theSize;
+
+						// preventing access to this data from the previous container
+						rhs.head = nullptr;
+						rhs.tail = nullptr;
+						rhs.theSize = 0;
+					}
+					return *this;
+				};
 
 				// member functions
-				int size() const; // number of elements
-				bool empty() const; // check if list is empty
-				void clear(); // delete all elements
-				void reverse(); // reverse the order of the elements
+				// number of elements
+				int size() const {
+					return theSize;
+				} ;
 
-				T &front(); // reference to the first element
-				const T& front() const;
-				T &back(); // reference to the last element
-				const T & back() const; 
+				// check if list is empty
+				bool empty() const {
+					return size() == 0;
+				};
+
+				// delete all elements
+				void clear() {
+					 while (!empty())
+            			pop_front();		
+				};
+
+				// reverse the order of the elements
+				void reverse() {
+					if (empty()) return;
+
+					// reversing the prev/next pointers of the nodes
+					Node *current = head->next;
+					Node *temp = nullptr;
+					while (current != tail) {
+						temp = current->next;
+						current->next = current->prev;
+						current->prev = temp;
+						current = current->prev;
+					}
+
+					// adjusting the object properties
+					temp = head;
+					head = tail;
+					tail = temp;
+				}; 
+
+				T &front() {
+					return *begin();
+				}; // reference to the first element
+				const T& front() const {
+					// compilator will pick the right overload due to the const state
+					return *begin();
+				};
+				T &back() {
+					return *(--end());
+				}; // reference to the last element
+				const T & back() const {
+					return *(--end());
+				}; 
 
 				void push_front(const T & val); // insert to the beginning
 				void push_front(T && val); // move version of insert
 				void push_back(const T & val); // insert to the end
 				void push_back(T && val); // move version of insert
-				void pop_front(); // delete first element
+				void pop_front() {
+					erase(begin());
+				}; // delete first element
 				void pop_back(); // delete last element
 
 				void remove(const T &val); // remove all elements with value = val
@@ -185,8 +276,25 @@ namespace cop4530 {
 				const_iterator end() const; 
 				iterator insert(iterator itr, const T& val); // insert val ahead of itr
 				iterator insert(iterator itr, T && val); // move version of insert
-				iterator erase(iterator itr); // erase one element
-				iterator erase(iterator start, iterator end); // erase [start, end)
+				iterator erase(iterator itr) {
+					Node* p = itr.current;
+					iterator next_el = p->next;
+
+					// linking neighboring elements
+					p->prev->next = p->next;
+					p->next->prev = p->prev;
+
+					delete p;
+					theSize--;
+					return next_el;
+				}; // erase one element
+				iterator erase(iterator start, iterator end) {
+					while (start != end)
+						start = erase(start);
+
+					// effectively returning end iterator
+					return start;
+				}; // erase [start, end)
 
 
 			private:
