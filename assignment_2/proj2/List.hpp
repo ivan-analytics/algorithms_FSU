@@ -1,6 +1,8 @@
 
 // list for template class implementation (template classes implementation is done is .hpp, not .cpp files)
 
+#include <iostream>
+
 namespace cop4530 {
 	template <typename T>
 		class List {
@@ -48,7 +50,9 @@ namespace cop4530 {
 					public:
 						iterator();
 						T & operator*();
-						const T & operator*() const;
+
+                        // already implemented in const_iterator the right way (?)
+						// const T & operator*() const;
 
 						T* operator->(); // return pointer to element
 						const T* operator->() const; // return pointer to content element
