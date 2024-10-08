@@ -132,9 +132,18 @@ namespace cop4530 {
 
 			public:
 				// constructor, desctructor, copy constructor
-				List(); // default zero parameter constructor
-				List(const List &rhs); // copy constructor
-				List(List && rhs); // move constructor
+				// Initialize the size to zero
+				List() {
+					init();
+				}
+				// copy constructor
+				List(const List &rhs) {
+					init();
+					for (auto &val : rhs)
+						push_back(val);
+				};
+				// move constructor
+				List(List && rhs); 
 				// num elements with value of val
 				explicit List(int num, const T& val = T{}); 
 				// constructs with elements [start, end)
@@ -185,7 +194,19 @@ namespace cop4530 {
 				Node *head; // head node
 				Node *tail; // tail node
 
-				void init(); // initialization
+				// initialization
+				void init() {
+					// initialize the size to zero
+					theSize = 0; 
+
+					// create head and tail mock nodes
+					head = new Node();
+					tail = new Node();
+
+					// make it looped
+					head->next = tail;
+					tail->prev = head;
+				};
 		};
 
 	// overloading comparison operators
