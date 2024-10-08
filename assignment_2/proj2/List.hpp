@@ -23,24 +23,62 @@ namespace cop4530 {
 				//nested const_iterator class
 				class const_iterator {
 					public:
-						const_iterator(); // default zero parameter constructor
-						const T & operator*() const; // operator*() to return element
-						const T * operator->() const; // operator->() to return pointer to element
+                        // default zero parameter constructor
+						const_iterator() {
+                            current = nullptr;
+                        };
+
+                        // operator*() to return element
+						const T & operator*() const {
+                            return const retrieve();
+                        };
+
+                         // operator->() to return pointer to element
+						const T * operator->() const {
+							return const &retrieve();
+                        };
+
 
 						// increment/decrement operators
-						const_iterator & operator++();
-						const_iterator operator++(int);
-						const_iterator & operator--();
-						const_iterator operator--(int);
+						const_iterator & operator++() {
+							current = current->next;
+							return *this;
+						};
+						const_iterator operator++(int) {
+							const_iterator temp = *this;
+							current = current->next;
+							return temp;
+						};
+						const_iterator & operator--() {
+							current = current->prev;
+							return *this;
+						};
+						const_iterator operator--(int) {
+							const_iterator temp = *this;
+							current = current->prev;
+							return temp;
+						};
 
 						// comparison operators
-						bool operator==(const const_iterator &rhs) const;
-						bool operator!=(const const_iterator &rhs) const;
+						bool operator==(const const_iterator &rhs) const {
+							return current == rhs.current;
+						};
+						bool operator!=(const const_iterator &rhs) const {
+							return current != rhs.current;
+						};
 
 					protected:
 						Node *current; // pointer to node in List
-						T & retrieve() const; // retrieve the element refers to
-						const_iterator(Node *p); // protected constructor
+
+                        // retrieve the element refers to
+						T & retrieve() const {
+							return current->data;
+                        };
+
+						// protected constructor
+						const_iterator(Node *p) {
+							current = p;
+						};
 
 						friend class List<T>;
 				};
