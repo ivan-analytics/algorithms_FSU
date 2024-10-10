@@ -256,26 +256,81 @@ namespace cop4530 {
 					return *(--end());
 				}; 
 
-				void push_front(const T & val); // insert to the beginning
-				void push_front(T && val); // move version of insert
-				void push_back(const T & val); // insert to the end
-				void push_back(T && val); // move version of insert
+				// insert to the beginning
+				void push_front(const T & val) {
+					insert(begin(), val);
+				}; 
+				// move version of insert
+				void push_front(T && val) {
+					insert(begin(), std::move(val));
+				}; 
+				// insert to the end
+				void push_back(const T & val) {
+					insert(begin(), val);
+				};
+				// move version of insert
+				void push_back(T && val) {
+					insert(begin(), std::move(val));
+				}; 
+				// delete first element
 				void pop_front() {
 					erase(begin());
-				}; // delete first element
-				void pop_back(); // delete last element
+				};
+				// delete last element
+				void pop_back() {
+					erase(--end());
+				};
 
-				void remove(const T &val); // remove all elements with value = val
+				// remove all elements with value = val
+				void remove(const T &val) {
+					auto itr = begin();
+					while (itr != end()) {
+						if (*itr == val)
+							itr = erase(itr);
+						else
+							++itr;
+					}
+				};
 
 				// print out all elements. ofc is deliminitor
-				void print(std::ostream& os, char ofc = ' ') const; 
+				void print(std::ostream& os, char ofc = ' ') const {
+					for (const_iterator itr = begin(); itr != end(); ++itr)
+						os << *itr << ofc;
+				}; 
 
-				iterator begin(); // iterator to first element
-				const_iterator begin() const;
-				iterator end(); // end marker iterator
-				const_iterator end() const; 
-				iterator insert(iterator itr, const T& val); // insert val ahead of itr
-				iterator insert(iterator itr, T && val); // move version of insert
+				// iterator to first element
+				iterator begin() {
+					return iterator(head->next);
+				}; 
+				const_iterator begin() const {
+					return const_iterator(head->next);
+				};
+				// end marker iterator
+				iterator end() {
+					return iterator(tail);
+				}; 
+				const_iterator end() const {
+					return const_iterator(tail);
+				}; 
+
+				// insert val ahead of itr
+				iterator insert(iterator itr, const T& val) {
+					Node *p = itr.current;
+					theSize++;
+					p->prev->next = new Node{val, p->prev, p};
+					p->prev = p->prev->next;
+					return p->prev;
+				}; 
+				// move version of insert
+				iterator insert(iterator itr, T && val) {
+					Node *p = itr.current;
+					theSize++;
+					p->prev->next = new Node{std::move(val), p->prev, p};
+					p->prev = p->prev->next;
+					return p->prev;
+				}; 
+
+				// erase one element
 				iterator erase(iterator itr) {
 					Node* p = itr.current;
 					iterator next_el = p->next;
@@ -287,16 +342,15 @@ namespace cop4530 {
 					delete p;
 					theSize--;
 					return next_el;
-				}; // erase one element
+				}; 
+				// erase [start, end)
 				iterator erase(iterator start, iterator end) {
 					while (start != end)
 						start = erase(start);
 
 					// effectively returning end iterator
 					return start;
-				}; // erase [start, end)
-
-
+				}; 
 			private:
 				int theSize; // number of elements
 				Node *head; // head node
