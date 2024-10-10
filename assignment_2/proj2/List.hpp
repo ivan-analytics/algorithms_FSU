@@ -373,13 +373,38 @@ namespace cop4530 {
 
 	// overloading comparison operators
 	template <typename T>
-		bool operator==(const List<T> & lhs, const List<T> &rhs);
-
+		bool operator==(const List<T> & lhs, const List<T> &rhs) {
+			// checking if the sizes are equal
+			if (lhs.size() != rhs.size()) {
+				return false;
+			}
+			
+			// iterating through both lists and compare elements
+			auto lhsIt = lhs.begin();
+			auto rhsIt = rhs.begin();
+			
+			while (lhsIt != lhs.end() && rhsIt != rhs.end()) {
+				if (*lhsIt != *rhsIt) { 
+					return false;
+				}
+				++lhsIt;
+				++rhsIt;
+			}
+			
+			// all elements have matched
+			return true;
+		};
 	template <typename T>
-		bool operator!=(const List<T> & lhs, const List<T> &rhs);
+		bool operator!=(const List<T> & lhs, const List<T> &rhs) {
+			return !lhs.operator==(rhs);
+		};
 
 	// overloading output operator
 	template <typename T>
-		std::ostream & operator<<(std::ostream &os, const List<T> &l);
+		std::ostream & operator<<(std::ostream &os, const List<T> &l) {
+			// reuse the List class method for printing itself
+			l.print(os);
+    		return os;
+		};
 
 } // end of namespace 4530
