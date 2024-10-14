@@ -30,12 +30,14 @@ namespace cop4530 {
 
                         // operator*() to return element
 						const T & operator*() const {
-                            return const retrieve();
+							auto const res = retrieve();
+                            return res; 
                         };
 
                          // operator->() to return pointer to element
 						const T * operator->() const {
-							return const &retrieve();
+							auto const res = &retrieve();
+							return res;
                         };
 
 
@@ -87,45 +89,45 @@ namespace cop4530 {
 				class iterator : public const_iterator {
 					public:
 						iterator() {
-							current = nullptr;
+							this->current = nullptr;
 						};
 
 						T & operator*() {
-							return retrieve();
+							return this->retrieve();
 						}
                         // already implemented in const_iterator the right way
 						// const T & operator*() const;
 
 						// return pointer to element
 						T* operator->() {
-							return &retrieve();
+							return &this->retrieve();
 						};
 						// already implemented in const_iterator the right way
 						// const T* operator->() const; // return pointer to content element
 
 						// increment/decrement operators
 						iterator & operator++() {
-							current = current->next;
+							this->current = this->current->next;
 							return *this;
 						};
 						iterator operator++(int) {
 							iterator temp = *this;
-							current = current->next;
+							this->current = this->current->next;
 							return temp;
 						};
 						iterator & operator--() {
-							current = current->prev;
+							this->current = this->current->prev;
 							return *this;
 						};
 						iterator operator--(int) {
 							iterator temp = *this;
-							current = current->prev;
+							this->current = this->current->prev;
 							return temp;
 						};
 
 					protected:
 						iterator(Node *p) {
-							current = p;
+							this->current = p;
 						};
 						friend class List<T>;
 				};

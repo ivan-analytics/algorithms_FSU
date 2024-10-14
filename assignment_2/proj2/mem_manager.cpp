@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include "List.h"
 
 using namespace std;
 
@@ -12,4 +13,9 @@ void print_menu() {
 	cout << "m: merge memory" << endl;
 	cout << "x: quit program" << endl;
 	cout << "Your choice: ";	
+}
+
+int main() {
+
+	return 0;
 }
