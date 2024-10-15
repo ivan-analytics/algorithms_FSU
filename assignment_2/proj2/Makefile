@@ -1,19 +1,15 @@
 # Variables
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -pedanticx
-TARGET = proj2.x
-SRC = test_list.cpp
-# SRC = mem_manager.cpp
-# HEADERS = List.h List.hpp
+CXXFLAGS = -std=c++17 -Wall -pedantic
 
-# The default target
-all: $(TARGET)
+all: temp.x test_list.x
 
-# Compile the program
-$(TARGET): $(SRC) $(HEADERS)
-	$(CXX) $(CXXFLAGS) $(SRC) -o $(TARGET)
+test_list.x: test_list.cpp
+	$(CXX) $(CXXFLAGS) test_list.cpp -o test_list.x
 
-# Force rebuild
-.PHONY: clean
-clean:
-	rm -f $(TARGET)
+temp.x: mem_manager.cpp
+	$(CXX) $(CXXFLAGS) mem_manager.cpp -o temp.x
+
+# proj2.x: 
+
+

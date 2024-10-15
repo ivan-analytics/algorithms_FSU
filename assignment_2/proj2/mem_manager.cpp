@@ -1,6 +1,6 @@
 #include <string>
 #include <iostream>
-#include "MyMemory.h"
+#include "MyMemoryBlock.h"
 
 using namespace std;
 
@@ -16,7 +16,8 @@ void print_menu() {
 }
 
 int main() {
-	
+
+	print_menu();
 
 	return 0;
 }
