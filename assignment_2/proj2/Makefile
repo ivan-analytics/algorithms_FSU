@@ -1,2 +1,18 @@
-proj2.x: mem_manager.cpp
-	g++ -std=c++17 mem_manager.cpp -o proj2.x
+# Variables
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -Wextra
+TARGET = proj2.x
+SRC = test_list.cpp
+# HEADERS = List.h List.hpp
+
+# The default target
+all: $(TARGET)
+
+# Compile the program
+$(TARGET): $(SRC) $(HEADERS)
+	$(CXX) $(CXXFLAGS) $(SRC) -o $(TARGET)
+
+# Force rebuild
+.PHONY: clean
+clean:
+	rm -f $(TARGET)

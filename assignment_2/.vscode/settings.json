@@ -62,6 +62,8 @@
         "__string": "cpp",
         "compare": "cpp",
         "concepts": "cpp",
-        "algorithm": "cpp"
-    }
+        "algorithm": "cpp",
+        "functional": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
