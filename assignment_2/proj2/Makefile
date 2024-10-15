@@ -3,6 +3,7 @@ CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra
 TARGET = proj2.x
 SRC = test_list.cpp
+# SRC = mem_manager.cpp
 # HEADERS = List.h List.hpp
 
 # The default target

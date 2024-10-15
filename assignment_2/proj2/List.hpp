@@ -225,22 +225,30 @@ void List<T>::clear() {
 // reverse the order of the elements
 template <typename T>
 void List<T>::reverse() {
-	if (empty()) return;
+	if (empty() || head->next == tail) return;
 
 	// reversing the prev/next pointers of the nodes
-	Node *current = head->next;
+	Node *current = head;
 	Node *temp = nullptr;
-	while (current != tail) {
-		temp = current->next;
-		current->next = current->prev;
-		current->prev = temp;
+	while (current != nullptr) {
+		temp = current->prev;
+        current->prev = current->next;
+        current->next = temp;
 		current = current->prev;
 	}
 
-	// adjusting the object properties
-	temp = head;
-	head = tail;
-	tail = temp;
+	// swap head and tail
+    temp = head;
+    head = tail;
+    tail = temp;
+
+    // adjust head and tail pointers
+    if (head != nullptr) {
+        head->prev = nullptr;
+    }
+    if (tail != nullptr) {
+        tail->next = nullptr;
+    }
 }; 
 
 template <typename T>
@@ -314,19 +322,23 @@ void List<T>::print(std::ostream& os, char ofc) const {
 // iterator to first element
 template <typename T>
 typename List<T>::iterator List<T>::begin() {
+	// std::cout << "begin: " << std::endl;
 	return iterator(head->next);
 }; 
 template <typename T>
 typename List<T>::const_iterator List<T>::begin() const {
+	// std::cout << "begin: " << std::endl;
 	return const_iterator(head->next);
 };
 // end marker iterator
 template <typename T>
 typename List<T>::iterator List<T>::end() {
+	// std::cout << "end: " << std::endl;
 	return iterator(tail);
 }; 
 template <typename T>
 typename List<T>::const_iterator List<T>::end() const {
+	// std::cout << "end: " << std::endl;
 	return const_iterator(tail);
 }; 
 
