@@ -7,8 +7,8 @@ all: temp.x test_list.x
 test_list.x: test_list.cpp
 	$(CXX) $(CXXFLAGS) test_list.cpp -o test_list.x
 
-temp.x: mem_manager.cpp
-	$(CXX) $(CXXFLAGS) mem_manager.cpp -o temp.x
+temp.x: mem_manager.cpp MyMemory.cpp MyMemoryBlock.cpp
+	$(CXX) $(CXXFLAGS) mem_manager.cpp MyMemory.cpp MyMemoryBlock.cpp -o temp.x
 
 # proj2.x: 
 
