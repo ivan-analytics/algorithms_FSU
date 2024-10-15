@@ -282,12 +282,12 @@ void List<T>::push_front(T && val) {
 // insert to the end
 template <typename T>
 void List<T>::push_back(const T & val) {
-	insert(begin(), val);
+	insert(end(), val);
 };
 // move version of insert
 template <typename T>
 void List<T>::push_back(T && val) {
-	insert(begin(), std::move(val));
+	insert(end(), std::move(val));
 }; 
 // delete first element
 template <typename T>

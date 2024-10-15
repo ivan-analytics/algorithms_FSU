@@ -217,9 +217,7 @@ int main() {
 	cout << "reverse list" << endl;
 	l2.reverse();
 	cout << "size " << l2.size() << endl;
-	std::cout << "before: " << std::endl;
 	cout << l2 << endl;
-	std::cout << "after: " << std::endl;
 
 	cout << "clearing list" << endl;
 	l2.clear();
