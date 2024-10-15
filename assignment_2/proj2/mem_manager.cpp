@@ -18,17 +18,25 @@ int main() {
 
 	// print_menu();
 
-	MyMemory m = MyMemory(5, 20);
-	m.req_mem(7);
-	m.req_mem(20);
+	MyMemory m = MyMemory(8, 20);
 	m.dump();
 
-	cout << endl;
-	m.release_mem(0, 5);
-	m.release_mem(1, 5);
-	m.release_mem(1, 20);
-	m.release_mem(1, 21);
-	m.release_mem(5, 5);
+	m.req_mem(7);
+	m.req_mem(20);
+	m.req_mem(14);
+	m.req_mem(14);
+	m.req_mem(14);
+	m.req_mem(14);
+	m.req_mem(14);
+	m.dump();
+
+	// m.release_mem(0, 5);
+	// m.release_mem(1, 5);
+	// m.release_mem(1, 20);
+	// m.release_mem(1, 21);
+	// m.release_mem(5, 5);
+	// m.dump();
+	m.merge_mem();
 	m.dump();
 
 	return 0;

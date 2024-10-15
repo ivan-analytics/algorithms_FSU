@@ -16,6 +16,15 @@ MyMemory::MyMemory(int num, int len) {
 
 
 void MyMemory::resize(int num, int len) {
+    mlist.clear();
+
+    for (int i = 0; i < num; i++) {
+        mlist.push_back(MyMemoryBlock(i, len));
+    }
+
+    max_index = num - 1;
+    block_size = len;
+    
     return;
 }
 
@@ -45,7 +54,7 @@ bool MyMemory::release_mem(int ind, int len) {
         return false;
 
     if (mlist.empty()) {
-        mlist.push_back(std::move(MyMemoryBlock(ind, len)));
+        mlist.push_back(MyMemoryBlock(ind, len));
         return true;
     }
 
@@ -58,28 +67,44 @@ bool MyMemory::release_mem(int ind, int len) {
         } else {
             // if we reached a larger index, that means there is no such index in mlist -> 
             // -> add a new block before the current value to preserve ascending order of indexes
-            mlist.insert(itr, std::move(MyMemoryBlock(ind, len)));
+            mlist.insert(itr, MyMemoryBlock(ind, len));
             return true;
+        }
+    }
+    return true;
+}
+
+
+
+void MyMemory::merge_mem() {
+    if (mlist.empty()) return;
+
+    auto itr = mlist.begin();
+    auto prev = itr;
+    itr++;
+    while (itr != mlist.end()) {
+        if ((itr->get_length() + (prev->get_length())) <= block_size) {
+            prev->free_mem(itr->get_length());
+            mlist.remove(*(itr++));
+        } else {
+            // only move prev if blocks haven't merged
+            prev = itr;
+            itr++;
         }
     }
 }
 
 
 
-void MyMemory::merge_mem() {
-    return;
-}
-
-
-
 void MyMemory::dump() {
+    std::cout << "Number of blocks: " << mlist.size() << std::endl;
     for (auto &el : mlist)
         el.print(std::cout);
     return;
 }
 
 
-
 MyMemory::~MyMemory() {
-    
+    // mlist will clear all memory blocks in its own destructor;
+    // nothing to clean manually
 }
