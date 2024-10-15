@@ -1,6 +1,6 @@
 # Variables
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra
+CXXFLAGS = -std=c++17 -Wall -pedanticx
 TARGET = proj2.x
 SRC = test_list.cpp
 # SRC = mem_manager.cpp

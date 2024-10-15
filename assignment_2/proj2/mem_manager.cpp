@@ -16,10 +16,7 @@ void print_menu() {
 }
 
 int main() {
-
-	int a = int{};
-	auto b = cop4530::List<int>();
-	cout << "res: " << b << ".";
+	
 
 	return 0;
 }
