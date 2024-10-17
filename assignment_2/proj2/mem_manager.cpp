@@ -1,4 +1,5 @@
 #include <string>
+#include <limits>
 #include "MyMemory.h"
 
 using namespace std;
