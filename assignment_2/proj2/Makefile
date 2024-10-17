@@ -1,15 +1,11 @@
 # Variables
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -pedantic
+CXXFLAGS = -std=c++11 -Wall -pedantic
 
-all: temp.x test_list.x
+all: proj2.x test_list.x
 
 test_list.x: test_list.cpp
 	$(CXX) $(CXXFLAGS) test_list.cpp -o test_list.x
 
-temp.x: mem_manager.cpp MyMemory.cpp MyMemoryBlock.cpp
-	$(CXX) $(CXXFLAGS) mem_manager.cpp MyMemory.cpp MyMemoryBlock.cpp -o temp.x
-
-# proj2.x: 
-
-
+proj2.x: mem_manager.cpp MyMemory.cpp MyMemoryBlock.cpp
+	$(CXX) $(CXXFLAGS) mem_manager.cpp MyMemory.cpp MyMemoryBlock.cpp -o proj2.x
