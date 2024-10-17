@@ -10,6 +10,8 @@ pair<int, int> init_prompt() {
 	cout << "Number of memory blocks (integer): ";
 	cin >> num_input;
 	cout << endl;
+	
+	// validation
 	while (cin.fail()) {
 		// clearing the trails of invalid input
         std::cin.clear();
@@ -22,6 +24,8 @@ pair<int, int> init_prompt() {
 
 	cout << "Memory block size (integer): ";
 	cin >> len_input;
+
+	// validation
 	if (cin.fail()) {
 		// clearing the trails of invalid input
         std::cin.clear();
