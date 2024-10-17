@@ -19,7 +19,9 @@ while (current != nullptr) {
 	}
 """
 loop's worst case is O(n) where n is the number of List's nodes, 
-since all it does is iterates through every List node, swapping pointers of a given node (swapping itself is 0(1))
+since all it does is iterates through every List node, swapping pointers of a given node
+Swapping itself is 0(1), since it is a sequence of one time operations.
+Thus, loop does n iterations with O(1) complexity of each, so  O(n)*O(1)
 
 - adjusting the pointers:
 """
@@ -76,8 +78,7 @@ which is O(n), where n is the number of elements in mlist.
 If it finds an index greater than ind, it inserts a new block before that index. 
 It uses the following insert method version:
 iterator insert(iterator itr, const T&& val);
-which inserts value val ahead of the node referred to by itr, so it does not iterate over the List and therefore has a complexity of 0(1)
-
+which inserts value val ahead of the node referred to by iterator itr, so it does not iterate over the List and therefore has a complexity of 0(1)
 So each loop iteration has a complexity of O(1), 
 meaning that the loop's overall complexity stays O(n)
 
