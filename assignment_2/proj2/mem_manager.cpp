@@ -7,7 +7,7 @@ using namespace std;
 
 pair<int, int> init_prompt() {
 	int num_input, len_input;
-	cout << "Memory configuration:" << endl;
+	cout << "Memory configuration: " << endl;
 	cout << "Number of memory blocks (integer): ";
 	cin >> num_input;
 	cout << endl;
