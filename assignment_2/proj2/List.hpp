@@ -237,12 +237,10 @@ void List<T>::reverse() {
 		current = current->prev;
 	}
 
-	// swap head and tail
+    // adjusting head and tail pointers
     temp = head;
     head = tail;
     tail = temp;
-
-    // adjust head and tail pointers
     if (head != nullptr) {
         head->prev = nullptr;
     }

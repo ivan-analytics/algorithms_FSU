@@ -1,0 +1,83 @@
+Complexity Analysis
+1. List::reverse() worst-case scenario complexity
+Final answer: O(n)
+O(n) = O(1) + O(n)*O(1) + O(1)
+Explanation:
+- initial check:
+"""
+if (empty() || head->next == tail) return;
+"""
+is O(1) since it is a one time operation
+
+- loop:
+"""
+while (current != nullptr) {
+		temp = current->prev;
+        current->prev = current->next;
+        current->next = temp;
+		current = current->prev;
+	}
+"""
+loop's worst case is O(n) where n is the number of List's nodes, 
+since all it does is iterates through every List node, swapping pointers of a given node (swapping itself is 0(1))
+
+- adjusting the pointers:
+"""
+temp = head;
+head = tail;
+tail = temp;
+if (head != nullptr) {
+    head->prev = nullptr;
+}
+if (tail != nullptr) {
+    tail->next = nullptr;
+}
+"""
+is O(1) since it is a sequence of one time operations
+
+
+
+2. MyMemory::release_mem() worst-case scenario complexity
+Final answer: O(n)
+O(n) = O(1) + O(n)*O(1) + O(1)
+Explanation
+- initial checks:
+"""
+if ((ind < 0 || ind > max_index) || (len < 0 || len > block_size))
+        return false;
+
+    if (mlist.empty()) {
+        mlist.push_back(MyMemoryBlock(ind, len));
+        return true;
+    }
+"""
+are O(1) since it is a sequence of one time operations (mlist.push_back() implementation is also O(1))
+
+- loop:
+"""
+for (auto itr = mlist.begin(); itr != mlist.end(); itr++) {
+        if (itr->get_index() < ind) {
+            continue;
+        } else if (itr->get_index() == ind) {
+            itr->free_mem(len);
+            return true;
+        } else {
+            // if we reached a larger index, that means there is no such index in mlist -> 
+            // -> add a new block before the current value to preserve ascending order of indexes
+            mlist.insert(itr, MyMemoryBlock(ind, len));
+            return true;
+        }
+    }
+"""
+This loop iterates through mlist using an iterator.
+In the worst case, it may need to traverse the entire list, 
+which is O(n), where n is the number of elements in mlist.
+
+If it finds an index greater than ind, it inserts a new block before that index. 
+It uses the following insert method version:
+iterator insert(iterator itr, const T&& val);
+which inserts value val ahead of the node referred to by itr, so it does not iterate over the List and therefore has a complexity of 0(1)
+
+So each loop iteration has a complexity of O(1), 
+meaning that the loop's overall complexity stays O(n)
+

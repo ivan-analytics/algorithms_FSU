@@ -49,7 +49,7 @@ int MyMemory::req_mem(int len) {
 
 bool MyMemory::release_mem(int ind, int len) {
     // find this ind
-    // if we reach a larger ind, we didnt fouind it, add it
+    // if we reach a larger ind, we didnt found it, add it
     if ((ind < 0 || ind > max_index) || (len < 0 || len > block_size))
         return false;
 
