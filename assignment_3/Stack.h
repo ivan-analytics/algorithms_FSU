@@ -7,13 +7,13 @@ namespace cop4530 {
 		class Stack {
 			public:
             Stack(); // zero-argument constructor.
-            Stack (const Stack<T>&); // copy constructor.   
-            Stack(Stack<T> &&) // move constructor.
+            Stack (const Stack<T>& other); // copy constructor.   
+            Stack(Stack<T>&& other); // move constructor.
             
             ~Stack(); // destructor
 
-            Stack<T>& operator=(const Stack <T>&); // copy assignment operator=
-            Stack<T>& operator=(const Stack <T>&&); // move assignment operator=
+            Stack<T>& operator=(const Stack <T>& other); // copy assignment operator=
+            Stack<T>& operator=(const Stack <T>&& other); // move assignment operator=
             
             bool empty() const; // returns true if the Stack contains no elements, and false otherwise  
             void clear(); // delete all elements from the stack
@@ -39,16 +39,16 @@ namespace cop4530 {
     std::ostream& operator<<(std::ostream& os, const Stack<T>& a); // invokes the print() method to print the Stack<T> a in the specified ostream    
 
     template <typename T>
-    bool operator==(const Stack<T>&, const Stack <T>&); // returns true if the two compared Stacks have the same elements, in the same order  
+    bool operator==(const Stack<T>& s1, const Stack<T>& s2); // returns true if the two compared Stacks have the same elements, in the same order  
     
     template <typename T>
-    bool operator!=(const Stack<T>&, const Stack <T>&); // opposite of operator==()
+    bool operator!=(const Stack<T>& s1, const Stack<T>& s2); // opposite of operator==()
     
     // returns true if every element in Stack a is smaller than or equal to the corresponding element of Statck b, 
     // i.e., if repeatedly invoking top() and pop() on both a and b,  
     // we will generate a sequence of elements a_i from a and b_i from b, and for every i,  a_i <= b_i, until a is empty.
     template <typename T>
-    bool operator<=(const Stack<T>& a, const Stack <T>& b);
+    bool operator<=(const Stack<T>& s1, const Stack<T>& s2);
 
     // including the implementation file
     #include "Stack.hpp"
