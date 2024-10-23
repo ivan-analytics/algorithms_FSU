@@ -1,4 +1,4 @@
-#include "Stack.h"
+// #include "stack.h"
 
 #include <iostream>
 #include <stdexcept>
@@ -28,14 +28,14 @@ template <typename T>
 cop4530::Stack<T>& cop4530::Stack<T>::operator=(const Stack <T>& other) {
     if (this != &other)
         this->elements = other.elements;
-    return this*;
+    return *this;
 } // copy assignment operator=
 
 template <typename T>
-cop4530::Stack<T>& cop4530::Stack<T>::operator=(const Stack <T>&&) {
+cop4530::Stack<T>& cop4530::Stack<T>::operator=(const Stack <T>&& other) {
     if (this != &other)
         this->elements = std::move(other.elements);
-    return this*;
+    return *this;
 } // move assignment operator=
 
 template <typename T>
@@ -60,21 +60,21 @@ void cop4530::Stack<T>::push(const T&& x) {
 
 template <typename T>
 void cop4530::Stack<T>::pop() {
-    if (this->elements.empty()) throw std::runtime_error("pop() is called but stack is already empty")
-    this->elements.pop_back(x);
+    if (this->elements.empty()) throw std::runtime_error("pop() is called but stack is already empty");
+    this->elements.pop_back();
 } // removes and discards the most recently added element of the Stack
 
 template <typename T>
 T& cop4530::Stack<T>::top() {
-    if (this->elements.empty()) throw std::runtime_error("top() is called but stack is empty")
+    if (this->elements.empty()) throw std::runtime_error("top() is called but stack is empty");
     return this->elements.back();
 } // mutator that returns a reference to the most recently added element of the Stack
 
 
 template <typename T>
 const T& cop4530::Stack<T>::top() const {
-    if (this->elements.empty()) throw std::runtime_error("top() is called but stack is empty")
-    return const this->elements.back();
+    if (this->elements.empty()) throw std::runtime_error("top() is called but stack is empty");
+    return this->elements.back();
 } // accessor that returns the most recently added element of the Stack  
 
 template <typename T>
@@ -85,14 +85,14 @@ int cop4530::Stack<T>::size() const {
 // print elements of Stack to ostream os. ofc is the separator between elements in the stack when they are printed out 
 // Note that print() prints elements in the opposite order of the Stack (that is, the oldest element should be printed first)
 template <typename T>
-void cop4530::Stack<T>::print(std::ostream& os, char ofc = ' ') const {
+void cop4530::Stack<T>::print(std::ostream& os, char ofc) const {
     for (auto& el : this->elements)
         os << el << ofc;
 }
 
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const cop4530::Stack<T>& a) {
-    a.print();
+    a.print(os);
     return os;
 } // invokes the print() method to print the Stack<T> a in the specified ostream    
 

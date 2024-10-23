@@ -51,7 +51,7 @@ namespace cop4530 {
     bool operator<=(const Stack<T>& s1, const Stack<T>& s2);
 
     // including the implementation file
-    #include "Stack.hpp"
+    #include "stack.hpp"
 }
 
 #endif
