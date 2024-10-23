@@ -1,5 +1,3 @@
-// #include "stack.h"
-
 #include <iostream>
 #include <stdexcept>
 
