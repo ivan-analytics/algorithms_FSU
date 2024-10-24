@@ -121,9 +121,9 @@ bool operator!=(const cop4530::Stack<T>& s1, const cop4530::Stack<T>& s2) {
     return !(s1 == s2);
 } // opposite of operator==()
 
-// returns true if every element in Stack a is smaller than or equal to the corresponding element of Statck b, 
-// i.e., if repeatedly invoking top() and pop() on both a and b,  
-// we will generate a sequence of elements a_i from a and b_i from b, and for every i,  a_i <= b_i, until a is empty.
+// returns true if every element in Stack s1 is smaller than or equal to the corresponding element of Statck s2, 
+// i.e., if repeatedly invoking top() and pop() on both s1 and s2,  
+// we will generate a sequence of elements s1_i from s1 and s2_i from s2, and for every i,  s1_i <= s2_i, until s1 is empty.
 template <typename T>
 bool operator<=(const cop4530::Stack<T>& s1, const cop4530::Stack <T>& s2) {
     // checking the first pair of elements before copying two stacks for higher efficiency
