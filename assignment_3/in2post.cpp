@@ -11,6 +11,18 @@ bool is_operator(string input) {
     return ((input == "+") || (input == "-") || (input == "*") || (input == "/"));
 }
 
+float apply_operator(float operand1, float operand2, string operator_to_apply) {
+    if (operator_to_apply == "+")
+        return operand1 + operand2;
+    else if (operator_to_apply == "-")
+        return operand1 - operand2;
+    else if (operator_to_apply == "*")
+        return operand1 * operand2;
+    else if (operator_to_apply == "/")
+        return operand1 / operand2;
+    else throw std::runtime_error("unknown operator");
+}
+
 bool is_number(const std::string& input) {
     try {
         std::stof(input); // tries to convert string to float
@@ -68,7 +80,6 @@ int main() {
         // Then push the input operator into the stack.
         // "+", "-", "*", or "/"
         else if (is_operator(input)) {
-            string prev_el{};
             string cur_el;
             while (true) {
                 if (st.empty()) break;
@@ -76,15 +87,14 @@ int main() {
 
                 if (cur_el == "(") break;
                 // if lower-precedence operator is at the top of the stack - stop
-                if ((prev_el == "*" || prev_el == "/") && (cur_el == "+" || cur_el == "-")) break;
+                if ((input == "*" || input == "/") && (cur_el == "+" || cur_el == "-")) break;
 
                 // push the input into the stack and go to the next element
                 st.pop();
                 output.push_back(cur_el);
-                prev_el = cur_el;
             }
 
-            // push the input operator into the stack
+            // push the operator into the stack
             st.push(input);
         }
 
@@ -143,7 +153,55 @@ int main() {
     // print the constructed expression
     for (auto& el : output)
         std::cout << el << " ";
-    
+
+
+
+ 
+    // Assume that the expression contains only numeric operands (no variable names). 
+    // Operands are pushed into the stack as they are ready from the input. 
+    // When an operator is read from the input, remove the two values on the top of the stack, apply the operator to them, and push the result onto the stack. 
+    // If an operator is read and the stack has fewer than two elements in it, report an error.  
+    // If end of input is reached and the stack has more than one operand left in it, report an error. 
+    // If end of input is reached and the stack has exactly one operand in it, print that as the final result, or 0 if the stack is empty.
+
+    cop4530::Stack<float> st_eval = cop4530::Stack<float>();
+    auto itr = output.begin();
+    while (itr != output.end()) {
+        if (is_variable(*itr)) {
+            for (auto& el : output)
+                std::cout << el << " ";
+            return(EXIT_SUCCESS);
+        }
+
+        else if (is_number(*itr)) 
+            st_eval.push(std::stof(*itr));
+
+        else if (is_operator(*itr)) {
+            if (st_eval.size() < 2) {
+                std::cout << "Error: *description*" << endl;
+                return(EXIT_FAILURE);
+            }
+            float operand1 = st_eval.top(); st_eval.pop();
+            float operand2 = st_eval.top(); st_eval.pop();
+
+            float res = apply_operator(operand2, operand1, *itr);
+            st_eval.push(res);
+
+        }
+        else throw std::runtime_error("unexpected case");
+
+        itr++;
+    }
+
+    if (st_eval.size() > 1) {
+        std::cout << "Error: *description*" << endl;
+        return(EXIT_FAILURE);
+    } else if (st_eval.size() == 1) {
+        cout << endl << "Final result: " << st_eval.top();
+        if (st_eval.top() < 0) cout << "LESS";
+    } else {
+        cout << endl << "Final result: " << 0;
+    }
 
     return(EXIT_SUCCESS);
 }
