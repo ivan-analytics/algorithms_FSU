@@ -137,7 +137,7 @@ int in2post_logic(string& line) {
             string cur_el;
             while (true) {
                 if (st.empty()) {
-                    std::cout << "Error: " << endl;
+                    std::cout << "Error: 1" << endl;
                     return(EXIT_FAILURE);
                 }
 
@@ -178,7 +178,9 @@ int in2post_logic(string& line) {
     while(!st.empty()) {
         auto el = st.top();
         if (el == "(") {
-            std::cout << "Error: " << endl;
+            std::cout << "Error: Infix expression: ";
+            std::cout << total_input;
+            std::cout << "has mismatched parens!";
             return(EXIT_FAILURE);
         }
         output.push_back(el);
@@ -219,7 +221,7 @@ int in2post_logic(string& line) {
 
         else if (is_operator(*itr)) {
             if (st_eval.size() < 2) {
-                std::cout << "Error: " << endl;
+                std::cout << "Error: Missing operands in the expression" << endl;
                 return(EXIT_FAILURE);
             }
             float operand1 = st_eval.top(); st_eval.pop();
