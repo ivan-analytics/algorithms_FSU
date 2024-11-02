@@ -1,6 +1,7 @@
 #ifndef DL_STACK_H
 #define DL_STACK_H
 #include <iostream>
+#include <vector>
 
 namespace cop4530 {
 	template <typename T>

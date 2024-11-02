@@ -53,18 +53,43 @@ bool is_variable(const std::string& str) {
     return true;
 }
 
-int main() {
+void print_res(string expr, bool is_error, bool is_var, float eval_res = 0) {
+    // expression
+    std::cout << endl << "Postfix expression: ";
+    std::cout << expr << " ";
+
+    // evaluation
+    std::cout << endl << "Postfix evaluation: ";
+    std::cout << expr << " ";
+    std::cout << " = ";
+
+    if (is_error) {
+        cout << expr;
+        return;
+    }
+
+    if (!is_var) {
+        cout << eval_res;
+    } else {
+        std::cout << expr;
+    }
+
+    return;
+}
+
+int in2post_logic(string& line) {
     cop4530::Stack<string> st = cop4530::Stack<string>();
-    string line;
     string input;
     string prev_input{};
+    string total_input{}; // full initial expression for error output
     std::vector<string> output{};
 
     // read the entire line (including spaces) until enter is pressed
     // using stringstream to process each word within a line separately
-    std::getline(std::cin, line);
     std::stringstream line_split(line);
     while (line_split >> input) {
+        total_input += input + " ";
+
         // If input symbol is "(", push it into stack.
         if (input == "(") {
             st.push(input);
@@ -103,14 +128,16 @@ int main() {
         // Then pop the stack discarding the parenthesis. If the stack is emptied without a "(" being found, report error.
         else if (input == ")") {
             if (is_operator(prev_input)) {
-                std::cout << "Error: Missing operand in postfix string. Unable to evaluate postfix string!" << endl;
+                std::cout << "Error: Infix expression: ";
+                std::cout << total_input;
+                std::cout << "has mismatched parens!";
                 return(EXIT_FAILURE);
             }
 
             string cur_el;
             while (true) {
                 if (st.empty()) {
-                    std::cout << "Error: *description*" << endl;
+                    std::cout << "Error: " << endl;
                     return(EXIT_FAILURE);
                 }
 
@@ -135,14 +162,23 @@ int main() {
     // If end of input is reached and the last input processed was an operator or "(", report an error. 
     // Otherwise output the top of the stack and pop the stack until the stack is empty.  
     // If an "(" is found in the stack during this process, report error.
-    if (is_operator(prev_input) || prev_input == "(") {
-        std::cout << "Error: *description*" << endl;
+    if (is_operator(prev_input)) {
+        print_res(total_input, true, true);
+        std::cout << endl << "Error: Missing operand in postfix string. Unable to evaluate postfix string!" << endl;
         return(EXIT_FAILURE);
     }
+
+    if (prev_input == "(") {
+        std::cout << "Error: Infix expression: ";
+        std::cout << total_input;
+        std::cout << "has mismatched parens!";
+        return(EXIT_FAILURE);
+    }
+
     while(!st.empty()) {
         auto el = st.top();
         if (el == "(") {
-            std::cout << "Error: *description*" << endl;
+            std::cout << "Error: " << endl;
             return(EXIT_FAILURE);
         }
         output.push_back(el);
@@ -150,11 +186,10 @@ int main() {
     }
 
 
-    // print the constructed expression
-    for (auto& el : output)
-        std::cout << el << " ";
-
-
+    // // print the constructed expression
+    // std::cout << endl << "Postfix expression: ";
+    // for (auto& el : output)
+    //     std::cout << el << " ";
 
  
     // Assume that the expression contains only numeric operands (no variable names). 
@@ -164,12 +199,18 @@ int main() {
     // If end of input is reached and the stack has more than one operand left in it, report an error. 
     // If end of input is reached and the stack has exactly one operand in it, print that as the final result, or 0 if the stack is empty.
 
+
+    // std::cout << endl << "Postfix evaluation: ";
+    // for (auto& el : output)
+    //     std::cout << el << " ";
+    // std::cout << " = ";
     cop4530::Stack<float> st_eval = cop4530::Stack<float>();
     auto itr = output.begin();
     while (itr != output.end()) {
         if (is_variable(*itr)) {
-            for (auto& el : output)
-                std::cout << el << " ";
+            string out{};
+            for (auto& el : output) out += el + " ";
+            print_res(out, false, true);
             return(EXIT_SUCCESS);
         }
 
@@ -178,7 +219,7 @@ int main() {
 
         else if (is_operator(*itr)) {
             if (st_eval.size() < 2) {
-                std::cout << "Error: *description*" << endl;
+                std::cout << "Error: " << endl;
                 return(EXIT_FAILURE);
             }
             float operand1 = st_eval.top(); st_eval.pop();
@@ -194,14 +235,26 @@ int main() {
     }
 
     if (st_eval.size() > 1) {
-        std::cout << "Error: *description*" << endl;
+        std::cout << "Error: " << endl;
         return(EXIT_FAILURE);
     } else if (st_eval.size() == 1) {
-        cout << endl << "Final result: " << st_eval.top();
-        if (st_eval.top() < 0) cout << "LESS";
-    } else {
-        cout << endl << "Final result: " << 0;
+        string out{};
+        for (auto& el : output) out += el + " ";
+        print_res(out, false, false, st_eval.top());
     }
-
     return(EXIT_SUCCESS);
+}
+
+int main() {
+    string line;
+    std::cout << "Enter infix expression (\"exit\" to quit): ";
+    while (std::getline(std::cin, line)) {
+        if (line == "exit") return(EXIT_SUCCESS);
+        if (line == "") {
+            print_res("Empty postfix", true, false);
+        }
+        in2post_logic(line);
+        std::cout << std::endl;
+        std::cout << "Enter infix expression (\"exit\" to quit): ";
+    }
 }
