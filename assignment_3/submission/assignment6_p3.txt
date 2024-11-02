@@ -1,0 +1,45 @@
+Complexity Analysis
+
+1. Stack::clear() worst-case scenario complexity
+Final answer: O(n)
+Expanded answer: O(n) * O(m)
+where: 
+n - number of elements in Stack
+O(m) - complexity of the destructor of each element T (for example, O(1) for T = int)
+
+Explanation:
+- clear operation:
+"""
+elements.clear();
+"""
+elements is std::vector and std::vector::clear() calls the destructor for each element in the vector, so it iterates through n elements, each with O(m) destructor complexity.
+
+
+2. 
+// ---------------------
+// EXPRESSION EVALUATION
+// ---------------------
+worst-case scenario complexity
+
+Final answer: O(n)
+O(n) = O(n) + O(n)*O(1) + O(n)
+Explanation:
+- loop through postfix expression tokens:
+"""
+for (auto itr = output.begin(); itr != output.end(); itr++) { ... }
+"""
+is O(n), where n is the number of tokens in the postfix expression.
+
+- operand pushing:
+"""
+st_eval.push(std::stof(*itr));
+"""
+is O(1) per operand, totaling O(n) for all tokens since each push is O(1).
+
+- operator application:
+"""
+float res = apply_operator(operand2, operand1, *itr);
+"""
+is O(1) per operator, totaling O(n) for all operators since each apply operation is O(1).
+
+Final complexity for in2post_logic() (evaluation part) remains O(n).
