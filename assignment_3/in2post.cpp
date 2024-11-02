@@ -11,6 +11,7 @@ bool is_operator(string input) {
     return ((input == "+") || (input == "-") || (input == "*") || (input == "/"));
 }
 
+
 float apply_operator(float operand1, float operand2, string operator_to_apply) {
     if (operator_to_apply == "+")
         return operand1 + operand2;
@@ -23,6 +24,7 @@ float apply_operator(float operand1, float operand2, string operator_to_apply) {
     else throw std::runtime_error("unknown operator");
 }
 
+
 bool is_number(const std::string& input) {
     try {
         std::stof(input); // tries to convert string to float
@@ -32,6 +34,7 @@ bool is_number(const std::string& input) {
         return false;
     }
 }
+
 
 bool is_variable(const std::string& str) {
     if (str.empty()) {
@@ -52,6 +55,7 @@ bool is_variable(const std::string& str) {
 
     return true;
 }
+
 
 void print_res(string expr, bool is_error, bool is_var, float eval_res = 0) {
     // expression
@@ -77,7 +81,12 @@ void print_res(string expr, bool is_error, bool is_var, float eval_res = 0) {
     return;
 }
 
+
+// logic for handling one given expression
 int in2post_logic(string& line) {
+    // ---------------------
+    // EXPRESSION CONVERSION
+    // ---------------------
     cop4530::Stack<string> st = cop4530::Stack<string>();
     string input;
     string prev_input{};
@@ -187,25 +196,16 @@ int in2post_logic(string& line) {
         st.pop();
     }
 
+    // ---------------------
+    // EXPRESSION EVALUATION
+    // ---------------------
 
-    // // print the constructed expression
-    // std::cout << endl << "Postfix expression: ";
-    // for (auto& el : output)
-    //     std::cout << el << " ";
-
- 
     // Assume that the expression contains only numeric operands (no variable names). 
     // Operands are pushed into the stack as they are ready from the input. 
     // When an operator is read from the input, remove the two values on the top of the stack, apply the operator to them, and push the result onto the stack. 
     // If an operator is read and the stack has fewer than two elements in it, report an error.  
     // If end of input is reached and the stack has more than one operand left in it, report an error. 
     // If end of input is reached and the stack has exactly one operand in it, print that as the final result, or 0 if the stack is empty.
-
-
-    // std::cout << endl << "Postfix evaluation: ";
-    // for (auto& el : output)
-    //     std::cout << el << " ";
-    // std::cout << " = ";
     cop4530::Stack<float> st_eval = cop4530::Stack<float>();
     auto itr = output.begin();
     while (itr != output.end()) {
