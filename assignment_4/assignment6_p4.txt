@@ -1,0 +1,58 @@
+Complexity Analysis
+
+1. Binary Expression Tree::makeEmpty(BinaryNode* & t) worst-case scenario complexity
+Final answer: O(n)
+
+Expanded answer: O(n) * O(1)
+
+where: 
+n - number of nodes in the tree
+O(1) - time to delete each node
+
+Explanation:
+- clear operation:
+"""
+void BET::makeEmpty(BinaryNode* &t) {
+    if (t != nullptr) {
+        makeEmpty(t->left);
+        makeEmpty(t->right);
+        delete t;
+    }
+    t = nullptr;
+}
+"""
+makeEmpty is a recursive function that traverses the binary tree in post-order to delete each node. 
+It visits each of the n nodes exactly once, and each deletion operation takes constant time, resulting in a time complexity of O(n).
+
+
+
+2. Postfix to Infix Conversion worst-case scenario complexity
+Final answer: O(n)
+
+Expanded answer: O(n) + O(n) = O(n)
+
+where: 
+n - number of tokens in the postfix expression
+first O(n) - iterating through the tokens and building the tree using stack operations, each operation being O(1)
+second O(n) - in-order traversal of the tree to print the infix expression
+
+Explanation:
+- Building the tree:
+"""
+while (iss >> token) {
+    if (isOperator(token)) {
+        // Operator handling
+    } else {
+        // Operand handling
+    }
+}
+"""
+The function iterates through each of the n tokens in the postfix expression. For each token, it performs constant time operations such as pushing or popping from a stack and creating nodes, resulting in O(n) time for building the tree.
+
+- Printing the infix expression:
+"""
+printInfixExpression(root);
+"""
+After building the tree, the function performs an in-order traversal to print the infix expression, visiting each of the n nodes exactly once, resulting in O(n) time.
+
+Combining these steps, the overall time complexity is O(n).
