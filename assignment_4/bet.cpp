@@ -69,7 +69,7 @@ const BET& BET::operator=(const BET& other) {
 // Print infix expression
 void BET::printInfixExpression() {
     printInfixExpression(root);
-    std::cout << std::endl;
+    std::cout << " " << std::endl;
 }
 
 // Print postfix expression
@@ -94,7 +94,6 @@ bool BET::empty() {
 }
 
 // Private member functions
-
 void BET::printInfixExpression(BinaryNode *n) {
     if (n != nullptr) {
         if (n->left && n->right) {
