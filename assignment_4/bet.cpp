@@ -2,8 +2,6 @@
 #include <stack>
 #include <sstream>
 
-namespace cop4530 {
-
 // Default constructor
 BET::BET() : root(nullptr) {}
 
@@ -193,5 +191,3 @@ int BET::precedence(const std::string &op) {
         return 2;
     return 0;
 }
-
-} // namespace cop4530
