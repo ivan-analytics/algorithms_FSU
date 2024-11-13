@@ -34,6 +34,7 @@ bool BET::buildFromPostfix(const std::string& postfix) {
             if (s.size() < 2) {
                 // Not enough operands
                 makeEmpty(root);
+                std::cout << "Error: Operator '" << token << "' does not have enough operands." << std::endl;
                 return false;
             }
             BinaryNode *right = s.top(); s.pop();
@@ -50,6 +51,7 @@ bool BET::buildFromPostfix(const std::string& postfix) {
     if (s.size() != 1) {
         // Too many operands
         makeEmpty(root);
+        std::cout << "Error: Too many operands in the expression." << std::endl;
         return false;
     }
 
