@@ -67,6 +67,8 @@
         "algorithm": "cpp",
         "deque": "cpp",
         "regex": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "list": "cpp",
+        "fstream": "cpp"
     }
 }
