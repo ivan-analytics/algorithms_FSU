@@ -6,6 +6,11 @@
 #include <utility>
 #include <unistd.h> // For crypt()
 
+#ifdef __linux__
+#include <crypt.h>
+#endif
+
+
 namespace cop4530 {
 
 class PassServer {
