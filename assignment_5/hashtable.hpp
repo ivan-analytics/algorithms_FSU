@@ -151,12 +151,12 @@ template <typename K, typename V>
 void HashTable<K,V>::rehash() {
     std::vector< std::list< std::pair<K,V> > > oldBuckets = buckets;
 
-    // Create new double-sized, empty table
+    // creating new double-sized, empty table
     buckets.resize(prime_below(2 * buckets.size()));
     for (auto & thisList : buckets)
         thisList.clear();
 
-    // Copy elements from oldBuckets to new buckets
+    // copying elements from oldBuckets to new buckets
     current_size = 0;
     for (auto & whichList : oldBuckets)
         for (auto & kv : whichList)
@@ -169,9 +169,7 @@ size_t HashTable<K,V>::myhash(const K &k) const {
     return hf(k) % buckets.size();
 }
 
-// Returns largest prime number <= n or zero if input is too large
-// This is likely to be more efficient than prime_above(), because
-// it only needs a vector of size n
+
 template <typename K, typename V>
 unsigned long HashTable<K,V>::prime_below (unsigned long n)
 {
@@ -190,7 +188,7 @@ unsigned long HashTable<K,V>::prime_below (unsigned long n)
       return 0;
     }
 
-  // now: 2 <= n < max_prime
+  // 2 <= n < max_prime
   std::vector <unsigned long> v (n+1);
   setPrimes(v);
   while (n > 2)

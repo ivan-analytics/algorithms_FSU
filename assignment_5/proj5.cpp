@@ -24,7 +24,7 @@ int main() {
     size_t capacity;
     cout << "Enter preferred hash table capacity (integer): ";
     cin >> capacity;
-    // Echo the input
+    // echoing the input
     cout << capacity << endl;
 
     PassServer ps(capacity);
@@ -35,7 +35,7 @@ int main() {
         Menu();
         cin >> choice;
         choice = tolower(choice);
-        // Echo the choice
+        // echoing the choice
         cout << "choice: " << choice << endl;
 
         if (choice == 'l') {
