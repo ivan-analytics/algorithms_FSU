@@ -196,7 +196,7 @@ unsigned long HashTable<K,V>::prime_below (unsigned long n)
   return 2;
 }
 
-// Sets all prime number indexes to 1. Called by method prime_below(n) 
+// sets all prime number indexes to 1
 template <typename K, typename V>
 void HashTable<K,V>::setPrimes(std::vector<unsigned long>& vprimes)
 {

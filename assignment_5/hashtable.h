@@ -1,7 +1,6 @@
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
 
-// Include necessary headers
 #include <vector>
 #include <list>
 #include <string>

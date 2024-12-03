@@ -71,18 +71,28 @@ bool PassServer::write_to_file(const char *filename) const {
 }
 
 std::string PassServer::encrypt(const std::string & str) {
+    // defining the salt using the MD5-based format with a fixed 8-character salt
     char salt[] = "$1$########";
+    
+    // encrypting the input string using crypt() with the specified salt
     char * encrypted = crypt(str.c_str(), salt);
+    
+    // checks
     if (encrypted == nullptr)
-        return "";
-    std::string encrypted_str(encrypted);
+        return ""; // Return an empty string if encryption fails
+    
+
+    std::string encrypted_str(encrypted);    
+    // finding the positions of the '$' delimiters
     size_t first = encrypted_str.find('$');
     size_t second = encrypted_str.find('$', first + 1);
     size_t third = encrypted_str.find('$', second + 1);
+    
+    // ensuring that the third '$' is found and there's at least one character after it
     if (third != std::string::npos && third + 1 < encrypted_str.size())
         return encrypted_str.substr(third + 1);
     else
-        return encrypted_str;
+        return "";
 }
 
 } // end namespace cop4530
