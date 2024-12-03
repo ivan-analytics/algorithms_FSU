@@ -104,12 +104,19 @@ bool HashTable<K,V>::load(const char *filename) {
 }
 
 template <typename K, typename V>
-void HashTable<K,V>::dump() const {
+void HashTable<K, V>::dump() const {
     for (size_t i = 0; i < buckets.size(); ++i) {
-        std::cout << "v[" << i << "]:";
-        for (auto & kv : buckets[i]) {
-            std::cout << " " << kv.first << " " << kv.second << " :";
+        std::cout << "v[" << i << "]: ";
+        
+        bool first = true;
+        for (const auto& kv : buckets[i]) {
+            if (!first) {
+                std::cout << ":";
+            }
+            std::cout << kv.first << " " << kv.second;
+            first = false;
         }
+        
         std::cout << std::endl;
     }
 }
