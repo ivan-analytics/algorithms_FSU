@@ -1,0 +1,45 @@
+Complexity Analysis
+
+1. HashTable::rehash() Worst-Case Scenario Complexity
+Final answer: O(n)
+
+Expanded answer: O(n) + O(m) + O(n) = O(n)
+
+where:
+n - number of elements in the hash table
+m - number of buckets after resizing (m ≈ 2n)
+
+Explanation:
+- Copying Existing Buckets:
+  - Time Complexity: O(n)
+  - All n elements are copied to oldBuckets.
+  
+- Resizing and Clearing New Buckets:
+  - Time Complexity: O(m)
+  - Resizing allocates space for m buckets and clears each bucket.
+  
+- Re-inserting Elements:
+  - Time Complexity: O(n)
+  - Each of the n elements is inserted into the new buckets with constant time per insertion.
+  
+Since m is proportional to n, the overall time complexity is O(n).
+
+
+
+
+2. PassServer::removeUser(const std::string & k) Worst-Case Scenario Complexity
+Final answer: O(n)
+
+Expanded answer: O(1) + O(k) = O(n)
+
+where:
+n - number of elements in the hash table
+k - number of elements in the specific bucket where the key resides
+
+Explanation:
+- HashTable::remove(k):
+  - Hashing the key takes O(1) time.
+  - Iterating through the bucket with k elements takes O(k) time.
+  
+In the worst case, all n elements are in one bucket (k = n), resulting in a time complexity of O(n).
+
