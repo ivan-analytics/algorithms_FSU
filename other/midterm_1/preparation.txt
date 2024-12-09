@@ -1,0 +1,167 @@
+
+// function objects
+struct Add {
+    int operator()(int x, int y) const {
+        return x + y;
+    }
+};
+
+int main() {
+    Add add;         // Instantiate functor
+    int result = add(3, 5);  // Calls `operator()`
+    return result;   // Returns 8
+}
+
+
+// shallow copy and deep copy
+shallow copy copies the object’s memory address, not the actual object itself.
+This means that both the original and copied object point to the same memory location for dynamically allocated resources
+changes in one object (like modifying a pointer’s data) will affect the other
+
+
+// templates
+template <typename T>
+class Ex {
+	public:
+	T foo(T a, int b);	
+
+	protected:
+	int inner;
+
+	private:
+	int just_this;
+}
+#include "Ex.hpp"
+
+
+
+template <typename T>
+T Ex<T>::foo(T a, int b) {
+	// code
+}
+
+// algo analysis
+big O - worst case scenario relative to growing N
+big Omega - best case
+big Theta - average case (Theta(n/2) in lenar search)
+
+
+
+Breadth-First Search (BFS)
+
+Breadth-First Search (BFS) is a graph traversal algorithm that explores nodes level by level, expanding each layer fully before moving to the next.
+
+	•	Method:
+	1.	Start at a node, mark it as visited, and enqueue it.
+	2.	Dequeue a node, visit all its unvisited adjacent nodes, mark them as visited, and enqueue them.
+	3.	Repeat until the queue is empty.
+	•	Implementation:
+	•	Implemented using a queue to manage the current layer of nodes.
+	•	Use Case: Shortest path in unweighted graphs, connected components.
+
+    A
+   / \
+  B   C
+ / \
+D   E
+
+queue<> q{};
+q.push(head);
+while (q is not emplty) {
+	el = q.front()
+	q.pop()
+
+	// do whatever u want with elements
+
+	if (el.left != nullptr) q.push(el.left)
+	if (el.right != nullptr)  q.push(el.right)
+}
+
+// dfs
+stack<> q{};
+q.push(head);
+while (q is not empty) {
+	el = q.front()
+	q.pop()
+
+	// do whatever u want with elements
+
+	if (el.left != nullptr) q.push(el.left)
+	if (el.right != nullptr)  q.push(el.right)
+}
+or recursion
+
+
+
+
+
+
+
+// recursion
+// Input: 5
+// Output: 120 (since  5! = 5 \times 4 \times 3 \times 2 \times 1 = 120 )
+
+
+int foo(int a) {
+	if (a == 0) return 1;
+
+	return a * foo(a - 1);	
+}
+
+
+// deque
+in a basic version, just an array, that have custom dynamic begin and end pinters (curcular array). when end meets beign - resizes as vector
+protected:
+// classic circular array implementation 
+T* content; size_t content_size // capacity, begin*, end*;
+
+List
+erase(itr) - actually deletes node from the list (that itr points to)
+remove(el_) - call erase on all nodes that are equal to el_
+
+
+basic steps to locate the line causing 
+a segmentation fault using a debug
+run a program in a debug mode, when segfault occurs, run a backtrace command to see call stack at the moment of the crash
+
+
+
+// infix to postfix conversion
+a + b1 * c + ( dd * e + f ) * G
+a b1 c * + dd e * f + G * +
+
+// Postfix evaluation
+5 3 12 * + 7 - 
+34
+
+
+// checking if symbols are balanced
+Balanced: {[()()]} — Each symbol has a matching counterpart, and they are nested properly.
+Not Balanced: {[(])} — The closing brackets do not match the most recent opening brackets.
+
+if )]} 
+	if ) and st.top == ( then pop else throw "error"
+	if ] and st.top == [ then pop else throw "error"
+	if } and st.top == { then pop else throw "error"
+if ([{
+	st.push
+
+
+
+
+
+// makefile
+main.x: main.cpp
+	g++ -std=c++11 -Wall main.cpp -o main.x
+
+
+
+
+
+
+
+
+
+
+
+
